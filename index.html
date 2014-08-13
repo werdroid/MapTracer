@@ -1,0 +1,158 @@
+<title>MapTracer</title>
+<script src="jquery.js"></script>
+<script src="processing-1.4.1.js"></script>
+
+<style>
+.point_com {
+	width: 180px;
+}
+</style>
+
+<canvas id="canvas" width="900" height="600" style="background: url(img/map2014feux.jpg) no-repeat center center; float: left;"></canvas>
+<div style="width: 200px;margin-left: 20px; float: left;">
+	<input type="button" value="Clear all" onclick="clearTraces();" />
+	<input type="button" value="Delete last point" onclick="removeTrace();" />
+	<hr>
+	<div id="list"></div>
+</div>
+
+<script type="text/javascript">
+// --------------------------------------
+// Model
+// --------------------------------------
+
+var traces = [];
+
+function pushTrace(trace) {
+	traces.push(trace);
+	applyModel();
+}
+
+function clearTraces() {
+	traces = [];
+	applyModel();
+}
+
+function removeTrace() {
+	traces.pop();
+	applyModel();
+}
+
+function exportTraces() {
+	var tracesDump = [];
+	for (var i=0, trace; trace=traces[i]; i++) {
+		tracesDump.push([
+			Math.round(trace.x * 3000), // mm
+			Math.round(trace.y * 2000), // mm
+			encodeURIComponent(trace.c ? trace.c : '') // comment
+		].join(','));
+	}
+	return tracesDump.join(';');
+}
+
+function importTraces(tracesNew) {
+	tracesNew = tracesNew.split(';');
+	traces = [];
+	for (var i=0, trace; trace=tracesNew[i]; i++) {
+		trace = trace.split(',');
+		pushTrace({
+			x: (trace[0] / 3000), // %
+			y: (trace[1] / 2000), // %
+			c: trace[2] ? decodeURIComponent(trace[2]) : '' // comment
+		});
+	}
+}
+
+function applyModel() {
+	history.pushState(traces, '', '#'+exportTraces());
+	updateList();
+}
+
+// --------------------------------------
+// View
+// --------------------------------------
+
+function updateList() {
+	var list = $('#list');
+	list.empty();
+
+	for (var i=0, trace; trace=traces[i]; i++) {
+		var input = $('<input class="point_com"></div>');
+		var line = $('<div class="point_line">'+i+'</div>');
+		line.append(input);
+		list.append(line);
+		input.data('index', i);
+		input.val(trace.c);
+	}
+}
+
+function onListItemChanged() {
+	console.log('change', $(this).data('index'), $(this).val());
+	traces[$(this).data('index')].c = $(this).val();
+	history.pushState(traces, '', '#'+exportTraces());
+}
+
+function sketchProc(p) {
+	with (p) {
+
+		setup = function() {
+			size(3000 * 0.3, 2000 * 0.3);
+		};
+
+		draw = function() {
+			background(0, 0, 0, 0);
+
+			stroke(0xFFCCCCCC);
+			strokeWeight(5.0);
+			var pointN;
+			for (var i=1, trace; trace=traces[i]; i++) {
+				var point0 = traces[i-1];
+				var point1 = pointN = traces[i];
+
+				line(point0.x * width, point0.y * height, point1.x * width, point1.y * height);
+			}
+
+			for (var i=0, trace; trace=traces[i]; i++) {
+				stroke(0xFFFF9933);
+				strokeWeight(10.0);
+				ellipse(trace.x * width, trace.y * height, 5, 5);
+
+				stroke(0xFF000000);
+				fill(0);
+				text(i, trace.x * width - 10, trace.y * height - 10);
+			}
+
+			if (traces.length > 0) {
+				stroke(0xFFCCCCCC);
+				strokeWeight(1.0);
+				var pointN = traces[traces.length - 1];
+				line(pointN.x * width, pointN.y * height, mouseX, mouseY);
+			}
+		};
+
+		mouseClicked = function() {
+			pushTrace({
+				x: mouseX / width,
+				y: mouseY / height
+			});
+		};
+
+	}
+}
+
+// --------------------------------------
+// Start
+// --------------------------------------
+
+$(function() {
+	var canvas = document.getElementById("canvas");
+	var p = new Processing(canvas, sketchProc);
+
+	if (location.hash) {
+		var hashImport = location.hash.substr(1);
+		importTraces(hashImport);
+	}
+
+	$('body').on('change', '.point_com', onListItemChanged);
+});
+</script>
