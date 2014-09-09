@@ -5,7 +5,7 @@ Draw and share a path on the map of the Cup of Robotics.
 
 The aim is to share and save ideas of strategy between members of a team via email or forum for example. It is pure HTML/JS it can be put on any static server.
 
-By [Vladimir.sh](http://vladimir.sh) for [Werdroid.fr](http://werdroid.fr)
+By [Werdroid.fr](http://werdroid.fr)
 
 Usage
 =========
