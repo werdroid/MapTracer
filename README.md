@@ -18,7 +18,7 @@ Usage
 Example
 =========
 
-http://werdroid.fr/maptracer/index.html#223,577,d%C3%A9part;1353,597,arr%C3%AAt;1363,27,poser%20la%20fresque;2097,1107,chercher%20le%20foyer;2297,1917,faire%20arbre%201;2913,1327,faire%20arbre%202
+http://werdroid.fr/maptracer/index.html#483,1023,;923,1053,;947,1913,prise%20du%20clap;333,1910,prise%20du%20clap;1220,767,;1230,203,mont%C3%A9e%20des%20marches
 
 ![MapTracer](https://raw.githubusercontent.com/werdroid/MapTracer/master/img/maptracer%20example.png)
 
