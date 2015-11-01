@@ -10,7 +10,7 @@ By [Werdroid.fr](http://werdroid.fr)
 Usage
 =========
 
-- Go to http://werdroid.fr/maptracer or on your own server
+- Go to http://werdroid.github.io/maptracer or on your own server
 - Draw the path of the robot by clicking on positions
 - Comment some points (optional)
 - Share the URL
