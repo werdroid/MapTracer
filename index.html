@@ -8,7 +8,10 @@
 }
 </style>
 
-<canvas id="canvas" width="900" height="600" style="background: url(img/table2015objets.png) no-repeat center center; float: left;"></canvas>
+<div style="background: url(img/map2016.jpg) no-repeat center center; display: inline-block; height: 664px; float: left;">
+	<canvas id="canvas" width="900" height="600"></canvas>
+</div>
+
 <div style="width: 200px;margin-left: 20px; float: left;">
 	<input type="button" value="Clear all" onclick="clearTraces();" />
 	<input type="button" value="Delete last point" onclick="removeTrace();" />
@@ -102,7 +105,7 @@ function sketchProc(p) {
 		draw = function() {
 			background(0, 0, 0, 0);
 
-			stroke(0xFFCCCCCC);
+			stroke(0xFF253C0A);
 			strokeWeight(5.0);
 			var pointN;
 			for (var i=1, trace; trace=traces[i]; i++) {
@@ -113,17 +116,17 @@ function sketchProc(p) {
 			}
 
 			for (var i=0, trace; trace=traces[i]; i++) {
-				stroke(0xFFFF9933);
+				stroke(0xFFFF5722);
 				strokeWeight(10.0);
 				ellipse(trace.x * width, trace.y * height, 5, 5);
 
-				stroke(0xFF000000);
+				stroke(0xFF253C0A);
 				fill(0);
 				text(i, trace.x * width - 10, trace.y * height - 10);
 			}
 
 			if (traces.length > 0) {
-				stroke(0xFFCCCCCC);
+				stroke(0xFF253C0A);
 				strokeWeight(1.0);
 				var pointN = traces[traces.length - 1];
 				line(pointN.x * width, pointN.y * height, mouseX, mouseY);
