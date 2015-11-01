@@ -18,9 +18,9 @@ Usage
 Example
 =========
 
-http://werdroid.fr/maptracer/index.html#483,1023,;923,1053,;947,1913,prise%20du%20clap;333,1910,prise%20du%20clap;1220,767,;1230,203,mont%C3%A9e%20des%20marches
+http://werdroid.github.io/maptracer/#167,853,D%C3%A9part;643,917,Pousser;1357,1083,
 
-![MapTracer](https://raw.githubusercontent.com/werdroid/MapTracer/master/img/maptracer%20example.png)
+![MapTracer](https://raw.githubusercontent.com/werdroid/MapTracer/master/img/map2016.jpg)
 
 License
 ----
