@@ -3,8 +3,15 @@
 <script src="processing-1.4.1.js"></script>
 
 <style>
+.point_num {
+	width: 20px;
+    display: inline-block;
+}
 .point_com {
 	width: 180px;
+}
+.point_coor {
+	
 }
 </style>
 
@@ -12,7 +19,7 @@
 	<canvas id="canvas" width="900" height="600"></canvas>
 </div>
 
-<div style="width: 200px;margin-left: 20px; float: left;">
+<div style="width: 300px;margin-left: 20px; float: left;">
 	<input type="button" value="Clear all" onclick="clearTraces();" />
 	<input type="button" value="Delete last point" onclick="removeTrace();" />
 	<hr>
@@ -80,9 +87,15 @@ function updateList() {
 	list.empty();
 
 	for (var i=0, trace; trace=traces[i]; i++) {
-		var input = $('<input class="point_com"></div>');
-		var line = $('<div class="point_line">'+i+'</div>');
+		var num = $('<span class="point_num">'+i+'</span>');
+		var input = $('<input class="point_com"/>');
+		var coor = $('<span class="point_coor">'+Math.round(trace.x * 3000)+'x'+Math.round(trace.y * 2000)+'</span>');
+		var line = $('<div class="point_line"></div>');
+		
+		line.append(num);
 		line.append(input);
+		line.append(coor);
+		
 		list.append(line);
 		input.data('index', i);
 		input.val(trace.c);
